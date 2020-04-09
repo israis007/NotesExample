@@ -273,4 +273,9 @@ class SimpleNote @JvmOverloads constructor(
         else
             adapter.getListNotes()
     }
+
+    fun setEventListener(eventNewNote: EventNewNote){
+        this.eventNewNote = eventNewNote
+        drawNotes()
+    }
 }
