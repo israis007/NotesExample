@@ -19,7 +19,8 @@ import com.israis007.simplenotes.tools.DateFormatter
 class NoteAdapter(
     private val context: Context,
     private val propertiesNote: PropertiesNote,
-    private val listNotes: ArrayList<NoteModel>
+    private val listNotes: ArrayList<NoteModel>,
+    private val eventNewNote: EventNewNote?
 ) : RecyclerView.Adapter<NoteAdapter.NoteItem>() {
 
     inner class NoteItem(private val noteView: View) : RecyclerView.ViewHolder(noteView) {
@@ -103,6 +104,7 @@ class NoteAdapter(
     fun addNewNote(noteModel: NoteModel){
         listNotes.add(noteModel)
         notifyItemInserted(itemCount - 1)
+        eventNewNote?.noteAdded(noteModel)
     }
 
     fun getListNotes() = listNotes

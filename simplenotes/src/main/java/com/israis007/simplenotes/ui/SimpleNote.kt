@@ -259,7 +259,8 @@ class SimpleNote @JvmOverloads constructor(
             adapter = NoteAdapter(
                 context,
                 propertiesNote,
-                listNotes
+                listNotes,
+                eventNewNote
             )
             recyclerView.adapter = adapter
             recyclerView.adapter!!.notifyDataSetChanged()

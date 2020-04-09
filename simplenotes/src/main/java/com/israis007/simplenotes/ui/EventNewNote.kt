@@ -6,4 +6,6 @@ interface EventNewNote {
 
     fun onNewNote(noteModel: NoteModel)
 
+    fun noteAdded(noteModel: NoteModel)
+
 }
