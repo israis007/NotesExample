@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SimpleNote">
+        <attr name="note_date_text_mask" format="string" />
+        <attr name="note_profile_type" format="enum">
+            <enum name="circle" value="0" />
+            <enum name="square" value="1" />
+        </attr>
+        <attr name="note_profile_tint" format="color" />
+        <attr name="note_profile_side_size" format="dimension" />
+        <attr name="note_name_text_size" format="dimension" />
+        <attr name="note_name_text_color" format="color" />
+        <attr name="note_date_text_size" format="dimension" />
+        <attr name="note_date_text_color" format="color" />
+        <attr name="note_detail_text_size" format="dimension" />
+        <attr name="note_detail_text_color" format="color" />
+        <attr name="note_detail_marginTop" format="dimension" />
+        <attr name="note_detail_marginStart" format="dimension" />
+        <attr name="note_detail_marginEnd" format="dimension" />
+        <attr name="note_detail_marginBottom" format="dimension" />
+        <attr name="note_new_text_size" format="dimension" />
+        <attr name="note_new_text_color" format="color" />
+        <attr name="note_new_border_enable_color" format="color" />
+        <attr name="note_new_border_disable_color" format="color" />
+        <attr name="note_button_text_color" format="color" />
+        <attr name="note_button_text_size" format="dimension" />
+        <attr name="note_button_text_allCaps" format="boolean" />
+        <attr name="note_button_background" format="color" />
+        <attr name="note_scrollable" format="boolean" />
+        <attr name="note_profile_default_icon" format="reference" />
+        <attr name="note_height_notes_list" format="dimension" />
+        <attr name="note_new_marginTop" format="dimension" />
+        <attr name="note_new_marginStart" format="dimension" />
+        <attr name="note_new_marginEnd" format="dimension" />
+        <attr name="note_new_marginBottom" format="dimension" />
+    </declare-styleable>
+</resources>

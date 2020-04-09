@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SimpleNoteTheme">
+        <item name="note_date_text_mask">@string/default_date_mask</item>
+        <item name="note_profile_type">circle</item>
+        <item name="note_profile_side_size">@dimen/profile_side</item>
+        <item name="note_name_text_size">@dimen/name_textsize</item>
+        <item name="note_name_text_color">@color/textColor</item>
+        <item name="note_date_text_size">@dimen/date_textsize</item>
+        <item name="note_date_text_color">@color/textColor</item>
+        <item name="note_detail_text_size">@dimen/detail_textsize</item>
+        <item name="note_detail_text_color">@color/textColor</item>
+        <item name="note_new_text_size">@dimen/detail_textsize</item>
+        <item name="note_new_text_color">@color/textColor</item>
+        <item name="note_new_border_enable_color">@color/primary</item>
+        <item name="note_new_border_disable_color">@color/textColor</item>
+        <item name="note_button_text_color">@color/primary</item>
+        <item name="note_button_text_size">@dimen/detail_textsize</item>
+        <item name="note_button_text_allCaps">false</item>
+        <item name="note_scrollable">false</item>
+        <item name="note_profile_default_icon">@drawable/ic_perfil</item>
+        <item name="note_detail_marginTop">@dimen/note_margin_top</item>
+        <item name="note_detail_marginStart">@dimen/labels_margin</item>
+        <item name="note_detail_marginEnd">@dimen/labels_margin</item>
+        <item name="note_detail_marginBottom">@dimen/note_margin_bottom</item>
+    </style>
+
+
+    <!-- EDIT TEXT OUTLINED -->
+    <style name="OutlineEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/textColor</item>
+        <item name="android:colorAccent">@color/primary</item>
+        <item name="boxStrokeColor">@color/primary</item>
+        <item name="hintTextColor">@color/primary</item>
+        <item name="android:cursorVisible">true</item>
+    </style>
+</resources>

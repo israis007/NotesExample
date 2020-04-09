@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="perfil_description">Icon of perfil</string>
+    <string name="default_date_mask">dd \'de\' MMMM \'del\' yyyy \'a las\' HH:mm aa</string>
+    <string name="empty_list_note">Aún no hay notas</string>
+    <string name="add_new_note">Agregar nueva nota</string>
+    <string name="add_new_button">Agregar</string>
+    <string name="profile_name">Cecilia Noemi Sánchez Salinas</string>
+    <string name="profile_detail">Esta visita es muy importante, la lider de este grupo es una persona muy respetada en la comunidad que podría abrir muchas oportunidades</string>
+    <string name="new_note_error">Campo vacío</string>
+</resources>
