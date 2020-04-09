@@ -2,8 +2,6 @@ package com.israis007.simplenotes.ui
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.TypedValue
@@ -12,7 +10,6 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
@@ -175,15 +172,15 @@ class SimpleNote @JvmOverloads constructor(
 
     private fun drawNotes() {
         this.removeAllViews()
+        val temp = LayoutInflater.from(context).inflate(R.layout.template_layout, null, false)
+        val til_newNote = temp.findViewById<TextInputLayout>(R.id.tilNewNote)
+        val et_newNote = temp.findViewById<TextInputEditText>(R.id.etNewNote)
+        val btn_newNote = temp.findViewById<Button>(R.id.btnNewNote)
         val lp = LayoutParams(
             LayoutParams.MATCH_PARENT,
             if (propertiesNote.note_scrollable) propertiesNote.note_height_notes_list.toInt() else LayoutParams.WRAP_CONTENT
         )
         recyclerView.layoutParams = lp
-        val temp = LayoutInflater.from(context).inflate(R.layout.template_layout, null, false)
-        val til_newNote = temp.findViewById<TextInputLayout>(R.id.tilNewNote)
-        val et_newNote = temp.findViewById<TextInputEditText>(R.id.etNewNote)
-        val btn_newNote = temp.findViewById<Button>(R.id.btnNewNote)
 
         loadAdapter()
 
@@ -249,9 +246,12 @@ class SimpleNote @JvmOverloads constructor(
                 } else
                     adapter.addNewNote(note)
                 et_newNote.text = null
+                drawNotes()
             }
         }
-
+//        this@SimpleNote.layoutParams = slp
+        this@SimpleNote.invalidate()
+        this@SimpleNote.requestLayout()
     }
 
     private fun loadAdapter() {

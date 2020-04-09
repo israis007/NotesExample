@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.israis007.simplenotes.ui.SimpleNote
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constra"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:note_scrollable="false"
-        app:note_profile_type="circle"
-        app:note_detail_marginStart="50sp"
-        app:note_profile_side_size="90sp"
-        app:note_new_border_enable_color="#3F51B5"
-        app:note_new_border_disable_color="#4CAF50"
-        app:note_detail_text_color="#000"
-        app:note_name_text_color="#0E27D6"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/testiv"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_perfil" />
+
+        <com.israis007.simplenotes.ui.SimpleNote
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/testiv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:note_detail_marginStart="50sp"
+            app:note_detail_text_color="#000"
+            app:note_name_text_color="#0E27D6"
+            app:note_new_border_disable_color="#4CAF50"
+            app:note_new_border_enable_color="#3F51B5"
+            app:note_profile_side_size="90sp"
+            app:note_profile_type="circle"
+            app:note_scrollable="false" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
