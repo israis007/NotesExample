@@ -168,7 +168,7 @@ class SimpleNote @JvmOverloads constructor(
             )
             recyclerView = RecyclerView(context)
             recyclerView.layoutManager = LinearLayoutManager(context)
-            recyclerView.isNestedScrollingEnabled = true
+            recyclerView.isNestedScrollingEnabled = propertiesNote.note_scrollable
             drawNotes()
         }
     }
@@ -192,15 +192,28 @@ class SimpleNote @JvmOverloads constructor(
 
         val states = arrayOf(
             intArrayOf(android.R.attr.state_focused),
-            intArrayOf(-android.R.attr.state_focused)
+            intArrayOf(-android.R.attr.state_focused),
+            intArrayOf(android.R.attr.state_empty),
+            intArrayOf(android.R.attr.state_enabled),
+            intArrayOf(android.R.attr.state_activated),
+            intArrayOf(-android.R.attr.state_pressed),
+            intArrayOf(-android.R.attr.state_window_focused),
+            intArrayOf(-android.R.attr.state_active)
         )
 
         val colors = intArrayOf(
             propertiesNote.note_new_border_enable_color,
+            propertiesNote.note_new_border_disable_color,
+            propertiesNote.note_new_border_disable_color,
+            propertiesNote.note_new_border_disable_color,
+            propertiesNote.note_new_border_disable_color,
+            propertiesNote.note_new_border_disable_color,
+            propertiesNote.note_new_border_disable_color,
             propertiesNote.note_new_border_disable_color
         )
 
         til_newNote.hintTextColor = ColorStateList(states, colors)
+        til_newNote.defaultHintTextColor = ColorStateList(states, colors)
 //        til_newNote.editText!!.setHintTextColor(propertiesNote.note_new_border_enable_color)
         et_newNote.setTextColor(propertiesNote.note_new_text_color)
 //        et_newNote.setHintTextColor(propertiesNote.note_new_border_enable_color)

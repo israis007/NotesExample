@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-    >
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
     <!-- Añadir nueva nota -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilNewNote"
+        style="@style/OutlineEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/labels_margin"
         android:layout_marginStart="@dimen/labels_margin"
         android:layout_marginEnd="@dimen/labels_margin"
-        style="@style/OutlineEditText">
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNewNote"
