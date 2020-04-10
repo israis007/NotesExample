@@ -107,6 +107,32 @@ class NoteAdapter(
         eventNewNote?.noteAdded(noteModel)
     }
 
+    fun addNotes(listNotes: ArrayList<NoteModel>){
+        listNotes.forEach {
+            val ic = itemCount
+            listNotes.add(it)
+            notifyItemInserted(ic + 1)
+            eventNewNote?.noteAdded(it)
+        }
+    }
+
     fun getListNotes() = listNotes
+
+    fun removeNote(index: Int){
+        listNotes.removeAt(index)
+        notifyDataSetChanged()
+    }
+
+    fun removeNote(noteModel: NoteModel){
+        listNotes.remove(noteModel)
+        notifyDataSetChanged()
+    }
+
+    fun cleanNotes(){
+        listNotes.clear()
+        notifyDataSetChanged()
+    }
+
+    fun getNote(index: Int) = listNotes[index]
 
 }

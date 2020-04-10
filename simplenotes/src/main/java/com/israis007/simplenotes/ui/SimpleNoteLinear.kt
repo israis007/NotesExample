@@ -6,32 +6,37 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.israis007.simplenotes.R
 import com.israis007.simplenotes.model.NoteModel
 import com.israis007.simplenotes.model.PropertiesNote
+import com.israis007.simplenotes.tools.DateFormatter
 import com.israis007.simplenotes.tools.ViewTools
 import java.util.*
 import kotlin.collections.ArrayList
 
-class SimpleNote @JvmOverloads constructor(
+class SimpleNoteLinear @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     private lateinit var propertiesNote: PropertiesNote
     private var listNotes = ArrayList<NoteModel>()
     private lateinit var recyclerView: RecyclerView
-    private var loadCustomAdapter = false
     private var iconD: Drawable? = null
     private var nameN: String? = null
-    private lateinit var adapter: NoteAdapter
     private var eventNewNote: EventNewNote? = null
 
     init {
@@ -172,17 +177,99 @@ class SimpleNote @JvmOverloads constructor(
 
     private fun drawNotes() {
         this.removeAllViews()
+
+        repeat(listNotes.size) {
+            val noteModel = listNotes[it]
+
+            val nc = LayoutInflater.from(context).inflate(R.layout.card_note, null, false)
+            val ivIcon = nc.findViewById<ImageView>(R.id.card_note_iv_profile)
+            val tvName = nc.findViewById<AppCompatTextView>(R.id.card_note_actv_name)
+            val tvDate = nc.findViewById<AppCompatTextView>(R.id.card_note_actv_date)
+            val tvDetail = nc.findViewById<AppCompatTextView>(R.id.card_note_actv_detail)
+
+            /* Setting properties */
+            val lp = tvDetail.layoutParams as ConstraintLayout.LayoutParams
+
+            lp.marginStart = propertiesNote.note_detail_marginStart.toInt()
+            lp.marginEnd = propertiesNote.note_detail_marginEnd.toInt()
+            lp.bottomMargin = propertiesNote.note_detail_marginBottom.toInt()
+            lp.topMargin = propertiesNote.note_detail_marginTop.toInt()
+
+            tvDetail.layoutParams = lp
+
+            val lpicon = ivIcon.layoutParams as ConstraintLayout.LayoutParams
+            lpicon.width = propertiesNote.note_profile_side_size.toInt()
+            lpicon.height = propertiesNote.note_profile_side_size.toInt()
+
+            ivIcon.layoutParams = lpicon
+
+            if (propertiesNote.note_profile_tint != -1)
+                ivIcon.setColorFilter(propertiesNote.note_profile_tint!!)
+
+            tvName.setTextSize(TypedValue.COMPLEX_UNIT_PX, propertiesNote.note_name_text_size)
+            tvDate.setTextSize(TypedValue.COMPLEX_UNIT_PX, propertiesNote.note_date_text_size)
+            tvDetail.setTextSize(TypedValue.COMPLEX_UNIT_PX, propertiesNote.note_detail_text_size)
+
+            tvName.setTextColor(propertiesNote.note_name_text_color)
+            tvDate.setTextColor(propertiesNote.note_date_text_color)
+            tvDetail.setTextColor(propertiesNote.note_detail_text_color)
+
+            when (propertiesNote.note_profile_type) {
+                PropertiesNote.ProfileType.CIRCLE -> if (noteModel.profile == null)
+                    Glide.with(context).load(R.drawable.ic_perfil).centerInside().circleCrop()
+                        .into(ivIcon)
+                else
+                    Glide.with(context)
+                        .setDefaultRequestOptions(
+                            RequestOptions().centerInside().circleCrop()
+                        )
+                        .load(noteModel.profile)
+                        .placeholder(propertiesNote.note_profile_default_icon)
+                        .error(propertiesNote.note_profile_default_icon)
+                        .into(ivIcon)
+                PropertiesNote.ProfileType.SQUARE -> if (noteModel.profile == null)
+                    Glide.with(context).load(R.drawable.ic_perfil).centerInside().circleCrop()
+                        .into(ivIcon)
+                else
+                    Glide.with(context)
+                        .setDefaultRequestOptions(
+                            RequestOptions().centerInside().centerCrop()
+                        )
+                        .load(noteModel.profile)
+                        .placeholder(propertiesNote.note_profile_default_icon)
+                        .error(propertiesNote.note_profile_default_icon)
+                        .into(ivIcon)
+            }
+
+            tvName.text = noteModel.name
+            tvDate.text = DateFormatter.getCalendarFormatted(
+                noteModel.date,
+                propertiesNote.note_date_text_mask
+            )
+            tvDetail.text = noteModel.detail
+
+            val lpe = LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+            )
+
+            nc.layoutParams = lpe
+
+            this@SimpleNoteLinear.addView(ViewTools.getViewWithoutParent(nc))
+        }
+
+
+        loadLastField()
+
+        this@SimpleNoteLinear.invalidate()
+        this@SimpleNoteLinear.requestLayout()
+    }
+
+    private fun loadLastField() {
         val temp = LayoutInflater.from(context).inflate(R.layout.template_layout, null, false)
         val til_newNote = temp.findViewById<TextInputLayout>(R.id.tilNewNote)
         val et_newNote = temp.findViewById<TextInputEditText>(R.id.etNewNote)
         val btn_newNote = temp.findViewById<Button>(R.id.btnNewNote)
-        val lp = LayoutParams(
-            LayoutParams.MATCH_PARENT,
-            if (propertiesNote.note_scrollable) propertiesNote.note_height_notes_list.toInt() else LayoutParams.WRAP_CONTENT
-        )
-        recyclerView.layoutParams = lp
-
-        loadAdapter()
 
         /* Setting properties */
         til_newNote.boxStrokeColor = propertiesNote.note_new_border_enable_color
@@ -211,9 +298,7 @@ class SimpleNote @JvmOverloads constructor(
 
         til_newNote.hintTextColor = ColorStateList(states, colors)
         til_newNote.defaultHintTextColor = ColorStateList(states, colors)
-//        til_newNote.editText!!.setHintTextColor(propertiesNote.note_new_border_enable_color)
         et_newNote.setTextColor(propertiesNote.note_new_text_color)
-//        et_newNote.setHintTextColor(propertiesNote.note_new_border_enable_color)
         et_newNote.setTextSize(TypedValue.COMPLEX_UNIT_PX, propertiesNote.note_new_text_size)
         btn_newNote.setTextSize(TypedValue.COMPLEX_UNIT_PX, propertiesNote.note_button_text_size)
         btn_newNote.setTextColor(propertiesNote.note_button_text_color)
@@ -238,40 +323,24 @@ class SimpleNote @JvmOverloads constructor(
             if (textNew.isEmpty())
                 et_newNote.error = context.getString(R.string.new_note_error)
             else {
-                val note = NoteModel(adapter.itemCount + 1, iconD, nameN ?: context.getString(R.string.profile_name), Calendar.getInstance(
-                    Locale.getDefault()), textNew, null)
-                if (loadCustomAdapter) {
-                    if (eventNewNote != null)
-                        eventNewNote!!.onNewNote(note)
-                } else
-                    adapter.addNewNote(note)
+                val note = NoteModel(
+                    listNotes.size + 1,
+                    iconD,
+                    nameN ?: context.getString(R.string.profile_name),
+                    Calendar.getInstance(
+                        Locale.getDefault()
+                    ),
+                    textNew,
+                    null
+                )
+                listNotes.add(note)
                 et_newNote.text = null
                 drawNotes()
             }
         }
-//        this@SimpleNote.layoutParams = slp
-        this@SimpleNote.invalidate()
-        this@SimpleNote.requestLayout()
-    }
 
-    private fun loadAdapter() {
-        if (!loadCustomAdapter) {
-            adapter = NoteAdapter(
-                context,
-                propertiesNote,
-                listNotes,
-                eventNewNote
-            )
-            recyclerView.adapter = adapter
-            recyclerView.adapter!!.notifyDataSetChanged()
-        }
+        this@SimpleNoteLinear.addView(ViewTools.getViewWithoutParent(temp))
     }
-
-    fun loadCustomAdapter(boolean: Boolean) {
-        loadCustomAdapter = boolean
-    }
-
-    fun getRecyclerView(): RecyclerView = recyclerView
 
     fun setNewNoteProfile(drawable: Drawable){
         iconD = drawable
@@ -281,48 +350,28 @@ class SimpleNote @JvmOverloads constructor(
         nameN = name
     }
 
-    fun getNotes(): ArrayList<NoteModel>? {
-        return if (loadCustomAdapter)
-            null
-        else
-            adapter.getListNotes()
-    }
-
-    fun setEventListener(eventNewNote: EventNewNote){
-        if (!loadCustomAdapter) {
-            this.eventNewNote = eventNewNote
-            drawNotes()
-        }
-    }
-
     fun addNotes(listNotes: ArrayList<NoteModel>){
-        if (!loadCustomAdapter) {
-            adapter.addNotes(listNotes)
-            drawNotes()
-        }
+        this.listNotes.addAll(listNotes)
+        drawNotes()
     }
 
     fun cleanNotes(){
-        if (!loadCustomAdapter) {
-            adapter.cleanNotes()
-            drawNotes()
-        }
+        this.listNotes.clear()
+        drawNotes()
     }
 
     fun removeNote(index: Int){
-        if (!loadCustomAdapter) {
-            adapter.removeNote(index)
-            drawNotes()
-        }
+        this.listNotes.removeAt(index)
+        drawNotes()
     }
 
     fun removeNote(noteModel: NoteModel){
-        if (!loadCustomAdapter) {
-            adapter.removeNote(noteModel)
-            drawNotes()
-        }
+        this.listNotes.remove(noteModel)
+        drawNotes()
     }
 
-    fun getNoteAt(index: Int) = if (loadCustomAdapter) null else adapter.getNote(index)
-    
+    fun getNotes() = this.listNotes
+
+    fun getNoteAt(index: Int) = this.listNotes[index]
+
 }
