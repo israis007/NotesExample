@@ -342,7 +342,7 @@ class SimpleNoteLinear @JvmOverloads constructor(
         this@SimpleNoteLinear.addView(ViewTools.getViewWithoutParent(temp))
     }
 
-    fun setNewNoteProfile(drawable: Drawable){
+    fun setNewNoteProfile(drawable: Drawable) {
         iconD = drawable
     }
 
@@ -350,22 +350,22 @@ class SimpleNoteLinear @JvmOverloads constructor(
         nameN = name
     }
 
-    fun addNotes(listNotes: ArrayList<NoteModel>){
+    fun addNotes(listNotes: ArrayList<NoteModel>) {
         this.listNotes.addAll(listNotes)
         drawNotes()
     }
 
-    fun cleanNotes(){
+    fun cleanNotes() {
         this.listNotes.clear()
         drawNotes()
     }
 
-    fun removeNote(index: Int){
+    fun removeNote(index: Int) {
         this.listNotes.removeAt(index)
         drawNotes()
     }
 
-    fun removeNote(noteModel: NoteModel){
+    fun removeNote(noteModel: NoteModel) {
         this.listNotes.remove(noteModel)
         drawNotes()
     }
@@ -373,5 +373,10 @@ class SimpleNoteLinear @JvmOverloads constructor(
     fun getNotes() = this.listNotes
 
     fun getNoteAt(index: Int) = this.listNotes[index]
+
+    fun setEventListener(eventNewNote: EventNewNote) {
+        this.eventNewNote = eventNewNote
+        drawNotes()
+    }
 
 }

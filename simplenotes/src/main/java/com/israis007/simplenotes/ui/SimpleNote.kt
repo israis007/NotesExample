@@ -324,5 +324,5 @@ class SimpleNote @JvmOverloads constructor(
     }
 
     fun getNoteAt(index: Int) = if (loadCustomAdapter) null else adapter.getNote(index)
-    
+
 }
