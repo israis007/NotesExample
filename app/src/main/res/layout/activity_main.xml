@@ -37,6 +37,7 @@
 <!--            app:note_scrollable="false" />-->
 
         <com.israis007.simplenotes.ui.SimpleNoteLinear
+            android:id="@+id/notess"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

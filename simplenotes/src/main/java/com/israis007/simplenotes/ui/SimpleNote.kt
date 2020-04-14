@@ -248,10 +248,9 @@ class SimpleNote @JvmOverloads constructor(
                     textNew,
                     null
                 )
-                if (loadCustomAdapter)
-                    eventNewNote?.onNewNote(note)
-                else
+                if (!loadCustomAdapter)
                     adapter.addNewNote(note)
+                eventNewNote?.onNewNote(note)
                 et_newNote.text = null
                 drawNotes()
             }
