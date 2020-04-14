@@ -332,9 +332,9 @@ class SimpleNoteLinear @JvmOverloads constructor(
                     textNew,
                     null
                 )
-                eventNewNote?.noteAdded(note)
                 listNotes.add(note)
                 et_newNote.text = null
+                eventNewNote?.noteAdded(note)
                 drawNotes()
             }
         }
@@ -370,7 +370,7 @@ class SimpleNoteLinear @JvmOverloads constructor(
         drawNotes()
     }
 
-    fun getNotes() = this.listNotes
+    fun getNotes(): ArrayList<NoteModel> = this.listNotes
 
     fun getNoteAt(index: Int) = this.listNotes[index]
 

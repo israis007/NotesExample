@@ -20,11 +20,15 @@ class MainActivity : AppCompatActivity() {
         notess.setEventListener(object: EventNewNote{
             override fun onNewNote(noteModel: NoteModel) {
                 Log.d(TAG, "note added: ${noteModel.detail} at ${DateFormatter.getCalendarFormatted(noteModel.date, getString(R.string.default_date_mask))}")
+                Log.d(TAG, notess.getNotes().toString())
             }
 
             override fun noteAdded(noteModel: NoteModel) {
                 Log.d(TAG, "note added: ${noteModel.detail} at ${DateFormatter.getCalendarFormatted(noteModel.date, getString(R.string.default_date_mask))}")
+                Log.d(TAG, notess.getNotes().toString())
             }
         })
+
+
     }
 }
