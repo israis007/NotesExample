@@ -238,12 +238,19 @@ class SimpleNote @JvmOverloads constructor(
             if (textNew.isEmpty())
                 et_newNote.error = context.getString(R.string.new_note_error)
             else {
-                val note = NoteModel(adapter.itemCount + 1, iconD, nameN ?: context.getString(R.string.profile_name), Calendar.getInstance(
-                    Locale.getDefault()), textNew, null)
-                if (loadCustomAdapter) {
-                    if (eventNewNote != null)
-                        eventNewNote!!.onNewNote(note)
-                } else
+                val note = NoteModel(
+                    adapter.itemCount + 1,
+                    iconD,
+                    nameN ?: context.getString(R.string.profile_name),
+                    Calendar.getInstance(
+                        Locale.getDefault()
+                    ),
+                    textNew,
+                    null
+                )
+                if (loadCustomAdapter)
+                    eventNewNote?.onNewNote(note)
+                else
                     adapter.addNewNote(note)
                 et_newNote.text = null
                 drawNotes()
@@ -273,7 +280,7 @@ class SimpleNote @JvmOverloads constructor(
 
     fun getRecyclerView(): RecyclerView = recyclerView
 
-    fun setNewNoteProfile(drawable: Drawable){
+    fun setNewNoteProfile(drawable: Drawable) {
         iconD = drawable
     }
 
@@ -288,35 +295,35 @@ class SimpleNote @JvmOverloads constructor(
             adapter.getListNotes()
     }
 
-    fun setEventListener(eventNewNote: EventNewNote){
+    fun setEventListener(eventNewNote: EventNewNote) {
         if (!loadCustomAdapter) {
             this.eventNewNote = eventNewNote
             drawNotes()
         }
     }
 
-    fun addNotes(listNotes: ArrayList<NoteModel>){
+    fun addNotes(listNotes: ArrayList<NoteModel>) {
         if (!loadCustomAdapter) {
             adapter.addNotes(listNotes)
             drawNotes()
         }
     }
 
-    fun cleanNotes(){
+    fun cleanNotes() {
         if (!loadCustomAdapter) {
             adapter.cleanNotes()
             drawNotes()
         }
     }
 
-    fun removeNote(index: Int){
+    fun removeNote(index: Int) {
         if (!loadCustomAdapter) {
             adapter.removeNote(index)
             drawNotes()
         }
     }
 
-    fun removeNote(noteModel: NoteModel){
+    fun removeNote(noteModel: NoteModel) {
         if (!loadCustomAdapter) {
             adapter.removeNote(noteModel)
             drawNotes()

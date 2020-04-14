@@ -254,7 +254,6 @@ class SimpleNoteLinear @JvmOverloads constructor(
             )
 
             nc.layoutParams = lpe
-
             this@SimpleNoteLinear.addView(ViewTools.getViewWithoutParent(nc))
         }
 
@@ -333,6 +332,7 @@ class SimpleNoteLinear @JvmOverloads constructor(
                     textNew,
                     null
                 )
+                eventNewNote?.noteAdded(note)
                 listNotes.add(note)
                 et_newNote.text = null
                 drawNotes()
