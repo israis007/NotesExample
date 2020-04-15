@@ -155,12 +155,11 @@ class SimpleNote @JvmOverloads constructor(
             orientation = VERTICAL
             listNotes.add(
                 NoteModel(
-                    0,
-                    null,
-                    reso.getString(R.string.profile_name),
-                    Calendar.getInstance(Locale.getDefault()),
-                    reso.getString(R.string.profile_detail),
-                    null
+                    urlImage = null,
+                    name = reso.getString(R.string.profile_name),
+                    date = Calendar.getInstance(Locale.getDefault()),
+                    detail = reso.getString(R.string.profile_detail),
+                    objects = null
                 )
             )
             recyclerView = RecyclerView(context)

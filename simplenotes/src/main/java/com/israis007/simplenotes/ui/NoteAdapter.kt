@@ -58,7 +58,7 @@ class NoteAdapter(
             tv_detail.setTextColor(propertiesNote.note_detail_text_color)
 
             when (propertiesNote.note_profile_type) {
-                PropertiesNote.ProfileType.CIRCLE -> if (noteModel.profile == null)
+                PropertiesNote.ProfileType.CIRCLE -> if (noteModel.profile == null && noteModel.urlImage.isNullOrEmpty())
                     Glide.with(context).load(R.drawable.ic_perfil).centerInside().circleCrop()
                         .into(icon)
                 else
@@ -66,22 +66,22 @@ class NoteAdapter(
                         .setDefaultRequestOptions(
                             RequestOptions().centerInside().circleCrop()
                         )
-                        .load(noteModel.profile)
+                        .load(noteModel.urlImage ?: noteModel.profile)
                         .placeholder(propertiesNote.note_profile_default_icon)
                         .error(propertiesNote.note_profile_default_icon)
                         .into(icon)
-                PropertiesNote.ProfileType.SQUARE -> if (noteModel.profile == null)
+                PropertiesNote.ProfileType.SQUARE -> if (noteModel.profile == null && noteModel.urlImage.isNullOrEmpty())
                     Glide.with(context).load(R.drawable.ic_perfil).centerInside().circleCrop()
                         .into(icon)
                 else
                     Glide.with(context)
-                    .setDefaultRequestOptions(
-                        RequestOptions().centerInside().centerCrop()
-                    )
-                    .load(noteModel.profile)
-                    .placeholder(propertiesNote.note_profile_default_icon)
-                    .error(propertiesNote.note_profile_default_icon)
-                    .into(icon)
+                        .setDefaultRequestOptions(
+                            RequestOptions().centerInside().centerCrop()
+                        )
+                        .load(noteModel.urlImage ?: noteModel.profile)
+                        .placeholder(propertiesNote.note_profile_default_icon)
+                        .error(propertiesNote.note_profile_default_icon)
+                        .into(icon)
             }
 
             tv_name.text = noteModel.name

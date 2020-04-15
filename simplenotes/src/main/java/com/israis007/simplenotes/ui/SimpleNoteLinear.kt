@@ -160,12 +160,11 @@ class SimpleNoteLinear @JvmOverloads constructor(
             orientation = VERTICAL
             listNotes.add(
                 NoteModel(
-                    0,
-                    null,
-                    reso.getString(R.string.profile_name),
-                    Calendar.getInstance(Locale.getDefault()),
-                    reso.getString(R.string.profile_detail),
-                    null
+                    profile = null,
+                    name = reso.getString(R.string.profile_name),
+                    date = Calendar.getInstance(Locale.getDefault()),
+                    detail = reso.getString(R.string.profile_detail),
+                    objects = null
                 )
             )
             recyclerView = RecyclerView(context)
@@ -215,7 +214,7 @@ class SimpleNoteLinear @JvmOverloads constructor(
             tvDetail.setTextColor(propertiesNote.note_detail_text_color)
 
             when (propertiesNote.note_profile_type) {
-                PropertiesNote.ProfileType.CIRCLE -> if (noteModel.profile == null)
+                PropertiesNote.ProfileType.CIRCLE -> if (noteModel.profile == null && noteModel.urlImage.isNullOrEmpty())
                     Glide.with(context).load(R.drawable.ic_perfil).centerInside().circleCrop()
                         .into(ivIcon)
                 else
@@ -223,11 +222,11 @@ class SimpleNoteLinear @JvmOverloads constructor(
                         .setDefaultRequestOptions(
                             RequestOptions().centerInside().circleCrop()
                         )
-                        .load(noteModel.profile)
+                        .load(noteModel.urlImage ?: noteModel.profile)
                         .placeholder(propertiesNote.note_profile_default_icon)
                         .error(propertiesNote.note_profile_default_icon)
                         .into(ivIcon)
-                PropertiesNote.ProfileType.SQUARE -> if (noteModel.profile == null)
+                PropertiesNote.ProfileType.SQUARE -> if (noteModel.profile == null && noteModel.urlImage.isNullOrEmpty())
                     Glide.with(context).load(R.drawable.ic_perfil).centerInside().circleCrop()
                         .into(ivIcon)
                 else
@@ -235,7 +234,7 @@ class SimpleNoteLinear @JvmOverloads constructor(
                         .setDefaultRequestOptions(
                             RequestOptions().centerInside().centerCrop()
                         )
-                        .load(noteModel.profile)
+                        .load(noteModel.urlImage ?: noteModel.profile)
                         .placeholder(propertiesNote.note_profile_default_icon)
                         .error(propertiesNote.note_profile_default_icon)
                         .into(ivIcon)
