@@ -333,6 +333,9 @@ class SimpleNoteLinear @JvmOverloads constructor(
                 )
                 listNotes.add(note)
                 et_newNote.text = null
+                et_newNote.clearFocus()
+                et_newNote.isFocusable = false
+                et_newNote.isFocusableInTouchMode = true
                 eventNewNote?.noteAdded(note)
                 drawNotes()
             }
